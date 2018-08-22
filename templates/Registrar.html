@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title> CUEBANA 2.0 </title>
+
+    <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="http://getbootstrap.com/examples/jumbotron-narrow/jumbotron-narrow.css" rel="stylesheet">
+    <link href="/static/AJUSTES.css" rel="stylesheet">
+
+</head>
+
+<center>
+
+    <body>
+
+        <h3 class="text-muted"> BIENVENIDO A CUEBANA2.0 </h3>
+        <div class="container">
+            <div class="header">
+                <nav>
+                    <ul class="nav nav-pills pull-right">
+                        <li role="presentation" class="activate"><a href="/Inicio">Inicio</a>
+                        </li>
+                        <li role="presentation"><a href="/Entrar">Entrar</a>
+                        </li>
+                        <li role="presentation"><a href="/Registro">Register</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+
+          </div>
+
+          <div class="jumbotron">
+            <h1> REGISTRARCE </h1>
+            <form class="form-signin" method="POST" >
+
+                <label for="inputName" class="sr-only">Name </label>
+                <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
+
+                <label for="inputLastname" class="sr-only">Lastname </label>
+                <input type="lastname" name="inputLastname" id="inputLastname" class="form-control" placeholder="Lastname" required autofocus>
+
+                <label for="inputEmail" class="sr-only">Email </label>
+                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+
+                <label for="inputPassword" class="sr-only">Password </label>
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+
+                <label for="inputNickname" class="sr-only">Nickname </label>
+                <input type="Nickname" name="inputNickname" id="inputNickname" class="form-control" placeholder="Nickname" required>
+
+                <p><input type = "submit" value = "Listo" /></p>
+
+            </form>
+          </div>
+
+          <footer class="footer">
+            <p>&copy; GalaxarCompany 2015</p>
+          </footer>
+    </body>
+
+</center>
+</html>
