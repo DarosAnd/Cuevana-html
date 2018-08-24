@@ -1,5 +1,5 @@
-from usuario import Usuario
 from BD import DB
+from usuario import Usuario
 from flask import Flask, render_template, request
 app = Flask(__name__, static_url_path="/static")
 
@@ -7,9 +7,9 @@ app = Flask(__name__, static_url_path="/static")
 def inicio():
     return render_template("Home.html")
 
-@app.route("/Registro")
-def registrar():
-    return render_template("Registrar.html")
+@app.route("/InicioLogeado", methods = ['GET', 'POST'])
+def logeado():
+    return render_template("InicioLogeado.html")
 
 @app.route("/Registro", methods = ['GET', 'POST'])
 def tomarDatos():
@@ -21,15 +21,26 @@ def tomarDatos():
         unUsuario.contrasenia = request.form.get("inputPassword")
         unUsuario.nickName = request.form.get("inputNickname")
 
+        for item in Usuario().getUsuarios():
+            if item.mail == unUsuario.mail or item.nickName == unUsuario.nickName:
+
+                #Ya existe el mail ingresado
+                return render_template("Registrar.html")
+
         unUsuario.registrarUsuario()
 
+        return render_template("InicioLogeado.html")
+    return render_template("Registrar.html")
 
-@app.route("/Entrar")
-def entrar():
+@app.route("/Entrar", methods = ['GET', 'POST'])
+def ingresar():
+    if request.method == 'POST':
+        for item in Usuario().getUsuarios():
+            if item.mail == request.form.get("inputEmail") and item.contrasenia == request.form.get("inputPassword"):
+                return render_template("InicioLogeado.html")
     return render_template("Entrar.html")
 
 DB().setconnection('localhost','root','alumno','mydb')
-
 
 if __name__ == "__main__":
     app.run(debug=True)
