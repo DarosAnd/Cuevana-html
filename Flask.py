@@ -1,22 +1,24 @@
 from BD import DB
 from usuario import Usuario
 from flask import *
+import hashlib
 app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
-@app.route("/Inicio")
+@app.route("/Home")
 def inicio():
     if 'userid' in session:
-        return redirect("/InicioLogeado")
+        return redirect("/InSession")
     return render_template("Home.html")
 
 
-@app.route("/InicioLogeado", methods=['GET', 'POST'])
+@app.route("/InSession", methods=['GET', 'POST'])
 def logeado():
-    print("ACA " + session["userid"])
-    return render_template("InicioLogeado.html", Usuario=Usuario.getUsuario(session["userid"]))
+    if 'userid' not in session:
+        return redirect("/Home")
+    return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]))
 
-@app.route("/Registro", methods = ['GET', 'POST'])
+@app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
     if request.method == 'POST':
         unUsuario = Usuario()
@@ -24,6 +26,8 @@ def tomarDatos():
         unUsuario.apellidoUsuario = request.form.get("inputLastname")
         unUsuario.mail = request.form.get("inputEmail")
         unUsuario.contrasenia = request.form.get("inputPassword")
+        unUsuario.contrasenia = hashlib.sha256(unUsuario.contrasenia.hexdigest())
+        print(unUsuario.contrasenia)
         unUsuario.nickName = request.form.get("inputNickname")
         session['userid'] = unUsuario.idUsuario
 
@@ -31,36 +35,30 @@ def tomarDatos():
             if item.mail == unUsuario.mail or item.nickName == unUsuario.nickName:
 
                 #Ya existe el mail ingresado
-                return render_template("Registrar.html")
+                return render_template("SignUp.html")
 
         unUsuario.registrarUsuario()
 
-        return render_template("InicioLogeado.html")
-    return render_template("Registrar.html")
+        return render_template("Home.html")
+    return render_template("SignUp.html")
 
-@app.route("/Entrar", methods = ['GET', 'POST'])
+@app.route("/SignIn", methods = ['GET', 'POST'])
 def ingresar():
     if request.method == 'POST':
             for item in Usuario.getUsuarios():
-                if item.nickName == request.form['inputNickname'] and item.contrasenia == request.form['inputPassword']:
-                    print("Seteanding " + request.form['inputNickname'])
-                    print("Seteanding " + Usuario.devolverIdUsuarioPorNickName(request.form['inputNickname']))
-                    session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form['inputNickname'])
 
-                    return render_template("InicioLogeado.html")
+                if item.nickName == request.form.get('inputNickname') and item.contrasenia == request.form.get('inputPassword'):
+                    session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
+                    return redirect("/InSession")
 
-    return render_template("Entrar.html")
+    return render_template("SignIn.html")
 
-@app.route('/logout')
-def salir():
-   session.pop('username', None)
-   return render_template('Home.html')
+@app.route('/LogOut')
+def logout():
+    session.pop('userid', None)
+    return redirect('/Home')
 
 DB().setconnection('localhost','root','alumno','mydb')
 
 if __name__ == "__main__":
     app.run(debug=True)
-
-    #if request.method == 'POST':
-     #   result = request.form
-      #  return render_template("result.html", result=result)

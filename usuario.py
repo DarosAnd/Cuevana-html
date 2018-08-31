@@ -11,12 +11,15 @@ class Usuario(object):
     mail = None
 
     def registrarUsuario(self):
-        cursor = DB().run("INSERT INTO Usuario(idUsuario,nombreUsuario,apellidoUsuario,nickName,contraseña,mail)" +
-                 "VALUES (NULL,'"+self.nombreUsuario+"','"+self.apellidoUsuario+"','" + self.contrasenia+"','"+self.nickName+"','"+self.mail+"');")
-        self.idUsuario = cursor.lastrowid()
+        DB().run("INSERT INTO Usuario(idUsuario,nombreUsuario,apellidoUsuario,nickName,contrasenia,mail)" +
+        "VALUES (NULL,'"+self.nombreUsuario+"','"+self.apellidoUsuario+"','" + self.nickName+"','"+self.contrasenia+"','"+self.mail+"');")
+
+        for item in Usuario.getUsuarios():
+            if item == self.nickName:
+                self.idUsuario = item.idUsuario
 
     def modificacionContrasenia(self):
-        DB().run("UPDATE Usuario SET contraseña = '"+self.contrasenia + "' WHERE idUsuario = "+ str(self.idUsuario)+";")
+        DB().run("UPDATE Usuario SET contrasenia = '"+self.contrasenia + "' WHERE idUsuario = "+ str(self.idUsuario)+";")
 
     def modificacionNickName(self):
         DB().run("UPDATE Usuario SET nickName = '"+self.nickName + "'WHERE idUsuario = "+ str(self.idUsuario)+";")
@@ -26,6 +29,7 @@ class Usuario(object):
     def devolverIdUsuarioPorNickName(nickname):
         for item in Usuario.getUsuarios():
             if item.nickName == nickname:
+
                 return item.idUsuario
         return
 
@@ -42,7 +46,7 @@ class Usuario(object):
         unUsuario.nombreUsuario = dict['nombreUsuario']
         unUsuario.apellidoUsuario = dict['apellidoUsuario']
         unUsuario.nickName = dict['nickName']
-        unUsuario.contrasenia = dict['contraseña']
+        unUsuario.contrasenia = dict['contrasenia']
         unUsuario.mail = dict['mail']
 
         return unUsuario
@@ -58,7 +62,7 @@ class Usuario(object):
             unUsuario.nombreUsuario = item['nombreUsuario']
             unUsuario.apellidoUsuario = item['apellidoUsuario']
             unUsuario.nickName = item['nickName']
-            unUsuario.contrasenia = item['contraseña']
+            unUsuario.contrasenia = item['contrasenia']
             unUsuario.mail = item['mail']
 
             listaUsuarios.append(unUsuario)
