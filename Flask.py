@@ -26,8 +26,8 @@ def tomarDatos():
         unUsuario.apellidoUsuario = request.form.get("inputLastname")
         unUsuario.mail = request.form.get("inputEmail")
         unUsuario.contrasenia = request.form.get("inputPassword")
-        unUsuario.contrasenia = hashlib.sha256(unUsuario.contrasenia.hexdigest())
-        print(unUsuario.contrasenia)
+        x = hashlib.sha256(unUsuario.contrasenia)
+        unUsuario.contrasenia = x.hexdigest()
         unUsuario.nickName = request.form.get("inputNickname")
         session['userid'] = unUsuario.idUsuario
 
@@ -46,8 +46,9 @@ def tomarDatos():
 def ingresar():
     if request.method == 'POST':
             for item in Usuario.getUsuarios():
+                x = hashlib.sha256(request.form.get('inputPassword'))
 
-                if item.nickName == request.form.get('inputNickname') and item.contrasenia == request.form.get('inputPassword'):
+                if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
                     return redirect("/InSession")
 

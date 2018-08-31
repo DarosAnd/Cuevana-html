@@ -4,19 +4,68 @@
 <head>
     <title> CUEBANA 2.0 </title>
 
-    <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+    <link rel='stylesheet' href='/static/css_nuevo/font-awesome'>
 
-      <link rel="stylesheet" href="/static/css/style.css">
+      <link rel="stylesheet" href="/static/css_nuevo/base.css">
+      <link rel="stylesheet" href="/static/css_nuevo/main.css">
+      <link rel="stylesheet" href="/static/css_nuevo/vendor.css">
 
 </head>
+
+    <header class="s-header header">
+
+        <div class="header__logo">
+            <a class="logo" href="index.html">
+                <img role="presentation" alt="Cuevana 2.0">
+            </a>
+        </div>
+        <a class="header__search-trigger" href="#0"></a>
+        <div class="header__search">
+
+            <form role="search" method="get" class="header__search-form" action="#">
+                <label>
+                    <span class="hide-content">Search for:</span>
+                    <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                </label>
+                <input type="submit" class="search-submit" value="Search">
+            </form>
+
+            <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+        </div>  <!-- end header__search -->
+
+        <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+        <nav class="header__nav-wrap">
+
+            <h2 class="header__nav-heading h6">Navigate to</h2>
+
+            <ul class="header__nav">
+                <li class="/Home"><a href="index.html" title="">Home</a></li>
+                <li class="has-children current">
+                    <a href="#0" title="">Categorias</a>
+                    <ul class="sub-menu">
+                        <li><a href="category.html">Accion</a></li>
+                        <li><a href="category.html">Ciencia Ficcion</a></li>
+                        <li><a href="category.html">Drama</a></li>
+                        <li><a href="category.html">Comedia</a></li>
+                    </ul>
+                </li>
+                <li><a href="style-guide.html" href="/SignIn">SignIn</a></li>
+                <li><a href="page-about.html" href="/SignUn">SignUp</a></li>
+            </ul> <!-- end header__nav -->
+
+            <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+
+        </nav>
+
+    </header>
+
+
 
 <center>
 
     <body>
 
-        <h3 class="text-muted"> BIENVENIDO A CUEBANA2.0 </h3>
-        <div class="container">
-            <div class="header">
                 <nav>
                     <ul class="nav nav-pills pull-right">
                         <li role="presentation" class="/Home"><a href="#">Inicio</a>
@@ -38,7 +87,7 @@
                 <img src=" "><img src=" "><img src=" "><img src=" ">
 
                 <p class="lead"></p>
-                <p><a class="btn btn-lg btn-success" href="/SignUp" role="button"> NO ESPERES MAS Y REGISTRATE AHORA!! </a>
+                <p style="color: red"><a style="background-color: #0b9fe5" class="btn btn-lg btn-success" href="/SignUp" role="button"> NO ESPERES MAS Y REGISTRATE AHORA!! </a>
                 </p>
             </div>
 
