@@ -1,12 +1,35 @@
 from BD import DB
+from categoria import Categoria
 
 class Titulo(object):
     idTitulo = None
     nombreTitulo = None
     Categoria = None
+    Linkimagen = None
 
 class Pelicula(Titulo):
     linkPelicula = None
+
+    @staticmethod
+    def getPeliculas():
+        listaPeliculas = []
+
+        cursor = DB().run("SELECT * FROM Pelicula")
+
+        for item in cursor:
+            unaPelicula = Pelicula()
+            unaPelicula.idTitulo = item['idPelicula']
+            unaPelicula.nombreTitulo = item['nombrePelicula']
+            unaPelicula.Linkimagen = item['linkImagenPelicula']
+            unaPelicula.linkPelicula = item['linkPelicula']
+
+            for item2 in Categoria.getCategorias():
+                if item2.idCategoria == item['Categoria_idCategoria']:
+                    unaPelicula.Categoria = item2
+
+            listaPeliculas.append(unaPelicula)
+
+        return listaPeliculas
 
     def altaPelicula(self):
         DB().run("INSERT INTO Pelicula(idPelicula,nombrePelicula,linkPelicula,Categoria_idCategoria)" +

@@ -38,7 +38,7 @@ class Usuario(object):
     def getUsuario(id):
         unUsuario = Usuario()
 
-        cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = "+ str(id)+";")
+        cursor = DB().run("SELECT * FROM Usuario WHERE idUsuario = " + str(id)+ ";")
 
         dict = cursor.fetchone()
 
@@ -50,6 +50,7 @@ class Usuario(object):
         unUsuario.mail = dict['mail']
 
         return unUsuario
+
     @staticmethod
     def getUsuarios():
         listaUsuarios = []

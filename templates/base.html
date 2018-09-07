@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+        <title> CUEBANA 2.0 </title>
+
+      <link rel="stylesheet" href="/static/css_nuevo/base.css">
+      <link rel="stylesheet" href="/static/css_nuevo/main.css">
+      <link rel="stylesheet" href="/static/css_nuevo/vendor.css">
+      <link rel="stylesheet" href="/static/css_login/login.css">
+
+</head>
+
+</head>
+
+    <header class="s-header header">
+
+        <div class="header__logo">
+            <a class="logo" href="index.html">
+                <img role="presentation" alt="Cuevana 2.0">
+            </a>
+        </div>
+        <a class="header__search-trigger" href="#0"></a>
+        <div class="header__search">
+
+            <form role="search" method="get" class="header__search-form" action="#">
+                <label>
+                    <span class="hide-content">Search for:</span>
+                    <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
+                </label>
+                <input type="submit" class="search-submit" value="Search">
+            </form>
+
+            <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
+
+        </div>  <!-- end header__search -->
+
+        <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
+        <nav class="header__nav-wrap">
+
+            <h2 class="header__nav-heading h6">Navigate to</h2>
+
+            <ul class="header__nav">
+                <li><a href="/Home" title="">Home</a></li>
+                <li class="has-children current">
+                    <a href="#0" title="">Categorias</a>
+                    <ul class="sub-menu">
+                        <li><a href="category.html">Accion</a></li>
+                        <li><a href="category.html">Ciencia Ficcion</a></li>
+                        <li><a href="category.html">Drama</a></li>
+                        <li><a href="category.html">Comedia</a></li>
+                    </ul>
+                </li>
+                <li role="presentation"><a href="/SignIn">SignIn</a></li>
+                <li role="presentation"><a href="/SignUp">SignUp</a></li>
+            </ul>
+
+            <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
+
+        </nav>
+
+    </header>
+
+<center style="padding-top: 50px;">
+
+    <body>
+        {% block content %}
+{% endblock %}
+    <footer class="s-footer">
+
+        <div class="s-footer__main">
+            <div class="row">
+
+                <div class="col-six tab-full s-footer__about">
+
+                    <h4 style="color: black"> Mas sobre nosotros </h4>
+
+                    <p style="color: black">Una pagina para ver peliculas gratis ,ahora que la cosa con el dolar esta complicada, con la mejor calidad y confiabilidad del mercado.</p>
+
+                </div> <!-- end s-footer__about -->
+
+                <div class="col-six tab-full s-footer__subscribe">
+
+                    <h4 style="color: black">Beneficios </h4>
+
+                    <p style="color: black">Envianos tu mail para recibir mas informacion.</p>
+
+                    <div class="subscribe-form">
+                        <form id="mc-form" class="group" novalidate="true">
+
+                            <input type="email" value="" name="EMAIL" class="email" id="mc-email" placeholder="Email Address" required="">
+
+                            <input type="submit" name="subscribe" value="Send">
+
+                            <label for="mc-email" class="subscribe-message"></label>
+
+                        </form>
+                    </div>
+
+                </div> <!-- end s-footer__subscribe -->
+
+            </div>
+        </div> <!-- end s-footer__main -->
+
+        <div class="s-footer__bottom">
+            <div class="row">
+
+                <div class="col-six">
+                    <ul class="footer-social">
+                        <li>
+                            <a href="#0"><i class="fab fa-facebook" style="color: black"></i></a>
+                        </li>
+                        <li>
+                            <a href="#0"><i class="fab fa-twitter" style="color: black"></i></a>
+                        </li>
+                        <li>
+                            <a href="#0"><i class="fab fa-instagram" style="color: black"></i></a>
+                        </li>
+                        <li>
+                            <a href="#0"><i class="fab fa-youtube" style="color: black"></i></a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="col-six">
+                    <div class="s-footer__copyright">
+
+</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="go-top">
+            <a class="smoothscroll" title="Back to Top" href="#top"></a>
+        </div>
+
+    </footer>
+
+
+    </body>
+
+</center>
+
+</html>

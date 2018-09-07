@@ -4,7 +4,6 @@
 <head>
     <title> CUEBANA 2.0 </title>
 
-    <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
 
       <link rel="stylesheet" href="/static/css_nuevo/base.css">
       <link rel="stylesheet" href="/static/css_nuevo/main.css">
@@ -16,7 +15,7 @@
 
     <body>
 
-        <h3 class="text-muted" style="color: white"> BIENVENIDO A CUEBANA2.0  </h3>
+        <h3 class="text-muted" style="color: white"> BIENVENIDO A CUEBANA2.0  {{Usuario.nickName}}</h3>
         <b><a href = '/LogOut'>click here to log out</a></b>
 
         <div class="container">
@@ -24,11 +23,13 @@
 
                 <h3>Peliculas de la semana</h3>
 
-                <img src="HTML/IMAGENES/index3.jpg"><img src="HTML/IMAGENES/index2.jpg"><img src="HTML/IMAGENES/index1.jpg">
-
-                <h3>Serie mas destacada que te pueda interesar</h3>
-
-                <img src="index.jpg"><img src=" "><img src=" "><img src=" ">
+                <tbody>
+                  {% for item in listaPeliculas %}
+                    <form action={{item.linkPelicula}}>
+                        <input type=image src={{item.Linkimagen}} width="400" height="650">
+                    </form>
+                  {% endfor %}
+                </tbody>
 
             </div>
 

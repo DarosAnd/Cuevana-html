@@ -1,100 +1,45 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+     {% block content %}
 
-<head>
-    <title> CUEBANA 2.0 </title>
 
-    <link rel='stylesheet' href='http://netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css'>
+          <div class="login">
+            <div class="heading">
 
-      <link rel="stylesheet" href="/static/css_nuevo/base.css">
-      <link rel="stylesheet" href="/static/css_nuevo/main.css">
-      <link rel="stylesheet" href="/static/css_nuevo/vendor.css">
+              <h2>Sign up</h2>
+              <form method="POST" action="/SignUp">
 
-</head>
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="inputName" id="inputName" class="form-control" placeholder="Name" required >
+              </div>
 
-</head>
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="inputLastname" id="inputLastname" class="form-control" placeholder="Lastname" required >
+              </div>
 
-    <header class="s-header header">
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required >
+              </div>
 
-        <div class="header__logo">
-            <a class="logo" href="index.html">
-                <img role="presentation" alt="Cuevana 2.0">
-            </a>
-        </div>
-        <a class="header__search-trigger" href="#0"></a>
-        <div class="header__search">
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                <input type="text" name="inputNickname" id="inputNickname" class="form-control" placeholder="Nickname" required>
+              </div>
 
-            <form role="search" method="get" class="header__search-form" action="#">
-                <label>
-                    <span class="hide-content">Search for:</span>
-                    <input type="search" class="search-field" placeholder="Type Keywords" value="" name="s" title="Search for:" autocomplete="off">
-                </label>
-                <input type="submit" class="search-submit" value="Search">
-            </form>
-
-            <a href="#0" title="Close Search" class="header__overlay-close">Close</a>
-
-        </div>  <!-- end header__search -->
-
-        <a class="header__toggle-menu" href="#0" title="Menu"><span>Menu</span></a>
-        <nav class="header__nav-wrap">
-
-            <h2 class="header__nav-heading h6">Navigate to</h2>
-
-            <ul class="header__nav">
-                <li><a href="/Home" title="">Home</a></li>
-                <li class="has-children current">
-                    <a href="#0" title="">Categorias</a>
-                    <ul class="sub-menu">
-                        <li><a href="category.html">Accion</a></li>
-                        <li><a href="category.html">Ciencia Ficcion</a></li>
-                        <li><a href="category.html">Drama</a></li>
-                        <li><a href="category.html">Comedia</a></li>
-                    </ul>
-                </li>
-                <li role="presentation"><a href="/SignIn">SignIn</a></li>
-                <li role="presentation"><a href="#0">SignUp</a></li>
-            </ul>
-
-            <a href="#0" title="Close Menu" class="header__overlay-close close-mobile-menu">Close</a>
-
-        </nav>
-
-    </header>
-
-<center style="padding-top: 50px;">
-
-    <body>
-
-        <h3 class="text-muted"> BIENVENIDO A CUEBANA2.0 </h3>
-          <div class="wrapper">
-            <h3> Registrarse </h3>
-            <form class="form-signin" method="POST" >
-
-                <label for="inputName" class="sr-only">Name </label>
-                <input type="name" name="inputName" id="inputName" class="form-control" placeholder="Name" required autofocus>
-
-                <label for="inputLastname" class="sr-only">Lastname </label>
-                <input type="lastname" name="inputLastname" id="inputLastname" class="form-control" placeholder="Lastname" required autofocus>
-
-                <label for="inputEmail" class="sr-only">Email </label>
-                <input type="email" name="inputEmail" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
-
-                <label for="inputPassword" class="sr-only">Password </label>
+              <div class="input-group input-group-lg">
+                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
                 <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
 
-                <label for="inputNickname" class="sr-only">Nickname </label>
-                <input type="Nickname" name="inputNickname" id="inputNickname" class="form-control" placeholder="Nickname" required>
+              </div>
 
-                <p2><input type = "submit" value = "Listo" /></p2>
+              <button type="submit" class="float">Login</button>
 
             </form>
           </div>
+         </div>
 
-          <footer class="footer">
-            <p>&copy; GalaxarCompany 2015</p>
-          </footer>
-    </body>
 
-</center>
-</html>
+
+{% endblock %}

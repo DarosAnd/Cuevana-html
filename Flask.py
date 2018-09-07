@@ -1,6 +1,7 @@
 from BD import DB
 from usuario import Usuario
 from flask import *
+from titulo import *
 import hashlib
 app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -16,7 +17,7 @@ def inicio():
 def logeado():
     if 'userid' not in session:
         return redirect("/Home")
-    return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]))
+    return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
@@ -33,8 +34,6 @@ def tomarDatos():
 
         for item in Usuario().getUsuarios():
             if item.mail == unUsuario.mail or item.nickName == unUsuario.nickName:
-
-                #Ya existe el mail ingresado
                 return render_template("SignUp.html")
 
         unUsuario.registrarUsuario()
