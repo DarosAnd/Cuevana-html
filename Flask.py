@@ -12,12 +12,19 @@ def inicio():
         return redirect("/InSession")
     return render_template("Home.html")
 
-
 @app.route("/InSession", methods=['GET', 'POST'])
 def logeado():
     if 'userid' not in session:
         return redirect("/Home")
     return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+
+@app.route("/pelicula", methods=['GET', 'POST'])
+def pelicula():
+    if 'userid' not in session:
+        return redirect("/Home")
+    miPelicula=Pelicula.getPelicula(int(request.args.get("id")))
+    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula)
+
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():

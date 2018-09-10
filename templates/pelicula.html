@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+     {% block content %}
+
+            <center style="padding-top: 50px;">
+                <div>
+                    <h3 class="text-muted" style="color: black"> PELICULA </h3>
+                        <body background="{{ pelicula.Linkimagen }}">
+
+                            <a href="/pelicula?id={{pelicula.linkPelicula}}">
+                                <img src={{pelicula.Linkimagen}} width="400" height="500" />
+                            </a>
+
+
+
+                        </body>
+                </div>
+            </center>
+        </body>
+
+
+
+{% endblock %}

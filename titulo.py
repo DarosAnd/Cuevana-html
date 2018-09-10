@@ -31,6 +31,23 @@ class Pelicula(Titulo):
 
         return listaPeliculas
 
+    @staticmethod
+    def getPelicula(id):
+        cursor = DB().run("SELECT * FROM Pelicula where idPelicula="+str(id)+";")
+        unaPelicula = Pelicula()
+        for item in cursor:
+
+            unaPelicula.idTitulo = item['idPelicula']
+            unaPelicula.nombreTitulo = item['nombrePelicula']
+            unaPelicula.Linkimagen = item['linkImagenPelicula']
+            unaPelicula.linkPelicula = item['linkPelicula']
+
+            for item2 in Categoria.getCategorias():
+                if item2.idCategoria == item['Categoria_idCategoria']:
+                    unaPelicula.Categoria = item2
+
+        return unaPelicula
+
     def altaPelicula(self):
         DB().run("INSERT INTO Pelicula(idPelicula,nombrePelicula,linkPelicula,Categoria_idCategoria)" +
                  "VALUES (NULL,'" + self.nombreTitulo + "','" + self.linkPelicula + "','" +
