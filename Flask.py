@@ -1,7 +1,7 @@
-from BD import DB
 from usuario import Usuario
 from flask import *
 from titulo import *
+from likes  import *
 import hashlib
 app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -10,21 +10,23 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 def inicio():
     if 'userid' in session:
         return redirect("/InSession")
-    return render_template("Home.html")
+    return render_template("Home.html", listaPeliculas=Pelicula.getPeliculas())
 
 @app.route("/InSession", methods=['GET', 'POST'])
 def logeado():
     if 'userid' not in session:
-        return redirect("/Home")
+        return redirect("/SignIn")
     return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
 
 @app.route("/pelicula", methods=['GET', 'POST'])
 def pelicula():
     if 'userid' not in session:
-        return redirect("/Home")
-    miPelicula=Pelicula.getPelicula(int(request.args.get("id")))
-    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula)
+        return redirect("/SignIn")
 
+    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+
+
+    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo))
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
