@@ -18,6 +18,7 @@ def logeado():
         return redirect("/SignIn")
     return render_template("InSession.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
 
+
 @app.route("/pelicula", methods=['GET', 'POST'])
 def pelicula():
     if 'userid' not in session:
@@ -26,7 +27,36 @@ def pelicula():
     miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
 
 
-    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo))
+    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado=0)
+
+@app.route("/LikePelicula", methods=['GET', 'POST'])
+def darLikePelicula():
+
+    unLike = Like()
+
+    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+    unLike.Pelicula = miPelicula
+
+    for item in Usuario.getUsuarios():
+        if item.idUsuario == session['userid']:
+            unLike.Usuario = item
+
+    if not Like.getLikeUserPelicula(unLike.Usuario.idUsuario, unLike.Pelicula.idTitulo):
+        unLike.altaLikePelicula()
+
+
+    return render_template("pelicula.html", pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 1)
+
+@app.route("/DislikePelicula", methods=['GET', 'POST'])
+def darDislikePelicula():
+
+    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+
+    for item in Like.getLikes():
+        if item.Usuario.idUsuario == session['userid'] and item.Pelicula.idTitulo == miPelicula.idTitulo:
+            item.bajaLikePelicula()
+
+    return render_template("pelicula.html", pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 0)
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():

@@ -10,6 +10,19 @@ class Like(object):
     Serie = None
 
     @staticmethod
+    def getLikeUserPelicula(iduser, idpelicula):
+        unLike = Like()
+
+        cursor = DB().run("SELECT * FROM `Like` WHERE Usuario_idUsuario = "+ str(iduser) +" AND Pelicula_idPelicula = "+str(idpelicula) +";")
+
+        dict = cursor.fetchone()
+
+        if dict is None:
+            return False
+        return True
+
+
+    @staticmethod
     def getLikesPelicula(idPelicula):
         listaLikes = []
 
@@ -31,14 +44,40 @@ class Like(object):
 
         return len(listaLikes)
 
+    @staticmethod
+    def getLikes():
+        listaLikes = []
+
+        cursor = DB().run("SELECT * FROM `Like`;")
+
+        for item in cursor:
+            unLike = Like()
+            unLike.idLike = item['idLike']
+
+            for item2 in Pelicula.getPeliculas():
+                if item2.idTitulo == item['Pelicula_idPelicula']:
+                    unLike.Pelicula = item2
+            for item3 in Usuario.getUsuarios():
+                if item3.idUsuario == item['Usuario_idUsuario']:
+                    unLike.Usuario = item3
+
+            listaLikes.append(unLike)
+
+        return listaLikes
+
+
     def altaLikePelicula(self):
-        DB().run("INSERT INTO Like(idLike,Usuario_idUsuario,Serie_idSerie,Pelicula_idPelicula) VALUES (NULL, " +
-            str(self.Usuario.idUsuario)+", NULL, "+str(self.Pelicula.idTitulo)+ ");")
+        DB().run("INSERT INTO `Like`(idLike,Usuario_idUsuario,Serie_idSerie,Pelicula_idPelicula) VALUES (NULL, " + str(self.Usuario.idUsuario)+", NULL, "+str(self.Pelicula.idTitulo) + ");")
+
+        for item in Like.getLikes():
+            if item.Pelicula.idTitulo == self.Pelicula.idTitulo and item.Usuario.idUsuario == self.Usuario.idUsuario:
+                self.idLike = item.idLike
+
     def altaLikeSerie(self):
-        DB().run("INSERT INTO Like(idLike,Usuario_idUsuario,Serie_idSerie,Pelicula_idPelicula) VALUES ( NULL " + ", " +
+        DB().run("INSERT INTO `Like`(idLike,Usuario_idUsuario,Serie_idSerie,Pelicula_idPelicula) VALUES ( NULL " + ", " +
             str(self.Usuario.idUsuario) + ", " + str(self.Serie.idTitulo) + ", NULL);")
 
     def bajaLikePelicula(self):
-        DB().run("DELETE FROM Like WHERE idLike = " + str(self.idLike) + ";")
+        DB().run("DELETE FROM `Like` WHERE idLike = " + str(self.idLike) + ";")
     def bajaLikeSerie(self):
-        DB().run("DELETE FROM Like WHERE idLike = "+ str(self.idLike) + ";")
+        DB().run("DELETE FROM `Like` WHERE idLike = "+ str(self.idLike) + ";")
