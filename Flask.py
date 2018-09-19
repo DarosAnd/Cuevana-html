@@ -45,7 +45,7 @@ def darLikePelicula():
         unLike.altaLikePelicula()
 
 
-    return render_template("pelicula.html", pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 1)
+    return render_template("pelicula.html",  Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 1)
 
 @app.route("/DislikePelicula", methods=['GET', 'POST'])
 def darDislikePelicula():
@@ -56,7 +56,7 @@ def darDislikePelicula():
         if item.Usuario.idUsuario == session['userid'] and item.Pelicula.idTitulo == miPelicula.idTitulo:
             item.bajaLikePelicula()
 
-    return render_template("pelicula.html", pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 0)
+    return render_template("pelicula.html",  Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 0)
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
@@ -66,7 +66,7 @@ def tomarDatos():
         unUsuario.apellidoUsuario = request.form.get("inputLastname")
         unUsuario.mail = request.form.get("inputEmail")
         unUsuario.contrasenia = request.form.get("inputPassword")
-        x = hashlib.sha256(unUsuario.contrasenia)
+        x = hashlib.sha256(unUsuario.contrasenia.encode('utf8'))
         unUsuario.contrasenia = x.hexdigest()
         unUsuario.nickName = request.form.get("inputNickname")
         session['userid'] = unUsuario.idUsuario
@@ -84,7 +84,7 @@ def tomarDatos():
 def ingresar():
     if request.method == 'POST':
             for item in Usuario.getUsuarios():
-                x = hashlib.sha256(request.form.get('inputPassword'))
+                x = hashlib.sha256(request.form.get('inputPassword').encode('utf8'))
 
                 if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
