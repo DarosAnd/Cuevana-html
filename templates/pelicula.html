@@ -1,6 +1,5 @@
 {% extends "base_logeado.html" %}
      {% block content %}
-
             <center style="padding-top: 10px;">
                 <div>
                     <h3 class="text-muted" style="color: black"> PELICULA </h3>
@@ -21,5 +20,15 @@
 
                 {{likes}}
             </center>
-        </body>
+
+            <div>
+                <form method="POST">
+                    <input type="text" size="100" name="inputComment" id="inputComment" placeholder="Agregar Comentario" required>
+                    <button type="submit" class="float">submit</button>
+                </form>
+            </div>
+
+            <h1>Comentarios</h1>
+
+            {{comentarios}}
 {% endblock %}

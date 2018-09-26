@@ -2,6 +2,7 @@ from usuario import Usuario
 from flask import *
 from titulo import *
 from likes  import *
+from comentarios import *
 import hashlib
 app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
@@ -57,6 +58,26 @@ def darDislikePelicula():
             item.bajaLikePelicula()
 
     return render_template("pelicula.html",  Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, likes=Like.getLikesPelicula(miPelicula.idTitulo), estado= 0)
+
+
+@app.route("/Comentario",methods=['GET','POST'])
+def agregarComentarioPelicula():
+
+    if request.method == 'POST':
+        unComentario = Comentario()
+
+        miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+        unComentario.Pelicula = miPelicula
+        unComentario.descripcion = request.form.get("inputComment")
+
+        for item in Usuario.getUsuarios():
+            if item.idUsuario == session['userid']:
+                unComentario.Usuario = item
+
+        unComentario.altaComentarioPelicula()
+
+        return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, comentarios=Comentario.getComentariosPelicula(miPelicula.idTitulo))
+    return redirect("/pelicula")
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
