@@ -23,7 +23,7 @@ class Like(object):
 
 
     @staticmethod
-    def getLikesPelicula(idPelicula):
+    def getCantLikesPelicula(idPelicula):
         listaLikes = []
 
         cursor = DB().run("SELECT * FROM `Like` WHERE Pelicula_idPelicula = " + str(idPelicula)+";")
@@ -43,6 +43,29 @@ class Like(object):
             listaLikes.append(unLike)
 
         return len(listaLikes)
+
+
+    @staticmethod
+    def getLikesPelicula(idPelicula):
+        listaLikes = []
+
+        cursor = DB().run("SELECT * FROM `Like` WHERE Pelicula_idPelicula = " + str(idPelicula)+";")
+
+        for item in cursor:
+            unLike = Like()
+            unLike.idLike = item['idLike']
+
+
+            for item2 in Pelicula.getPeliculas():
+                if item2.idTitulo == item['Pelicula_idPelicula']:
+                    unLike.Pelicula = item2
+            for item2 in Usuario.getUsuarios():
+                if item2.idUsuario == item['Usuario_idUsuario']:
+                    unLike.Usuario = item2
+
+            listaLikes.append(unLike)
+
+        return listaLikes
 
     @staticmethod
     def getLikes():

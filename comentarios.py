@@ -33,9 +33,7 @@ class Comentario(object):
 
 
     def altaComentarioPelicula(self):
-        c = DB().run("INSERT INTO Comentario(idComentario,descripcion,Usuario_idUsuario,Pelicula_idPelicula,Capitulo_idCapitulo) VALUES (NULL, '"
-                 + self.descripcion + "', " + self.Usuario.idUsuario + "," +
-                 self.Pelicula.idTitulo + ", NULL);")
+        c = DB().run("INSERT INTO Comentario(idComentario,descripcion,Usuario_idUsuario,Pelicula_idPelicula,Capitulo_idCapitulo) VALUES (NULL, '" + self.descripcion + "', " + str(self.Usuario.idUsuario) + "," + str(self.Pelicula.idTitulo) + ", NULL);")
 
         self.idComentario = c.lastrowid
 
