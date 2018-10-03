@@ -129,7 +129,7 @@ def darDislikePelicula():
         if item.Pelicula==None:
             continue
         if item.Usuario.idUsuario == session['userid'] and item.Pelicula.idTitulo == miPelicula.idTitulo:
-            item.bajaLikePelicula()
+            item.bajaLike()
 
     return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
 
@@ -154,10 +154,10 @@ def darDislikeSerie():
     miSerie = Serie.getSerie(int(request.args.get("idSerie")))
 
     for item in Like.getLikes():
-        if item.Serie==None:
+        if item.Serie == None:
             continue
         if item.Usuario.idUsuario == session['userid'] and item.Serie.idTitulo == miSerie.idTitulo:
-            item.bajaLikeSerie()
+            item.bajaLike()
 
     return redirect("/serie?idSerie=" + str(miSerie.idTitulo))
 

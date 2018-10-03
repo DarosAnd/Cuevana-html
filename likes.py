@@ -163,7 +163,5 @@ class Like(object):
             if item.Serie.idTitulo == self.Serie.idTitulo and item.Usuario.idUsuario == self.Usuario.idUsuario:
                 self.idLike = item.idLike
 
-    def bajaLikePelicula(self):
+    def bajaLike(self):
         DB().run("DELETE FROM `Like` WHERE idLike = " + str(self.idLike) + ";")
-    def bajaLikeSerie(self):
-        DB().run("DELETE FROM `Like` WHERE idLike = "+ str(self.idLike) + ";")
