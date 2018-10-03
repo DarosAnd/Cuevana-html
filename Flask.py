@@ -48,16 +48,23 @@ def ingresar():
 
                 if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
-                    return redirect("/InSession")
+                    return redirect("/InSessionPelis")
 
     return render_template("SignIn.html")
 
 
-@app.route("/InSession", methods=['GET', 'POST'])
-def logeado():
+@app.route("/InSessionPelis", methods=['GET', 'POST'])
+def logeadoPeliculas():
     if 'userid' not in session:
         return redirect("/SignIn")
     return render_template("LogeadoPeliculas.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+
+
+@app.route("/InSessionSerie", methods=['GET','POST'])
+def logeadoSeries():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+    return render_template("LogeadoSeries.html", Usuario=Usuario.getUsuario(session["userid"]), listaSeries=Serie.getSeries())
 
 
 @app.route("/pelicula", methods=['GET', 'POST'])

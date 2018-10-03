@@ -73,6 +73,27 @@ class Serie(Titulo):
         DB().run("UPDATE Usuario SET Categoria_idCategoria = '" + self.Categoria.idCategoria +
                  "' WHERE idPelicula = " + str(self.idTitulo) + ";")
 
+    @staticmethod
+    def getSeries():
+        listaSeries = []
+
+        cursor = DB().run("SELECT * FROM Serie")
+
+        for item in cursor:
+            unaSeries = Pelicula()
+            unaSeries.idTitulo = item['idSerie']
+            unaSeries.nombreTitulo = item['nombreSerie']
+            unaSeries.Linkimagen = item['linkImagenSerie']
+
+            for item2 in Categoria.getCategorias():
+                if item2.idCategoria == item['Categoria_idCategoria']:
+                    unaSeries.Categoria = item2
+
+            listaSeries.append(unaSeries)
+
+        return listaSeries
+
+
 class Capitulo(object):
     idCapitulo = None
     linkCapitulo = None
