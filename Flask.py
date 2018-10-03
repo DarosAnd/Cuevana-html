@@ -7,6 +7,13 @@ import hashlib
 app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
+
+# administradores van a poder cargar peliculas (agregar, modif, borrar)
+# borrar comentario, solo el usuario que lo puso o un mopderador
+# paginar
+# una pagina donde el usuario pueda ver todos sus likes
+
+
 @app.route("/")
 def index():
     return redirect("/Home")
@@ -14,7 +21,7 @@ def index():
 @app.route("/Home")
 def inicio():
     if 'userid' in session:
-        return redirect("/InSession")
+        return redirect("/InSessionPelis")
     return render_template("Home.html", listaPeliculas=Pelicula.getPeliculas())
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
@@ -72,7 +79,7 @@ def pelicula():
     if 'userid' not in session:
         return redirect("/SignIn")
 
-    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
     estado = 0
 
     for item in Like.getLikesPelicula(miPelicula.idTitulo):
@@ -81,12 +88,27 @@ def pelicula():
 
     return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, comentarios=Comentario.getComentariosPelicula(miPelicula.idTitulo), likes=Like.getCantLikesPelicula(miPelicula.idTitulo), estado=estado)
 
+
+@app.route("/serie", methods=['GET','POST'])
+def serie():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
+    miSerie = Serie.getSerie(int(request.args.get("idSerie")))
+    estado = 0
+
+    for item in Like.getLikesSerie(miSerie.idTitulo):
+        if item.Usuario.idUsuario == session["userid"]:
+            estado = 1
+
+    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado)
+
 @app.route("/LikePelicula", methods=['GET', 'POST'])
 def darLikePelicula():
 
     unLike = Like()
 
-    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
     unLike.Pelicula = miPelicula
 
     for item in Usuario.getUsuarios():
@@ -96,18 +118,49 @@ def darLikePelicula():
     if not Like.getLikeUserPelicula(unLike.Usuario.idUsuario, unLike.Pelicula.idTitulo):
         unLike.altaLikePelicula()
 
-    return redirect("/pelicula?id=" + str(miPelicula.idTitulo))
+    return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
 
 @app.route("/DislikePelicula", methods=['GET', 'POST'])
 def darDislikePelicula():
 
-    miPelicula = Pelicula.getPelicula(int(request.args.get("id")))
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
 
     for item in Like.getLikes():
+        if item.Pelicula==None:
+            continue
         if item.Usuario.idUsuario == session['userid'] and item.Pelicula.idTitulo == miPelicula.idTitulo:
             item.bajaLikePelicula()
 
-    return redirect("/pelicula?id=" + str(miPelicula.idTitulo))
+    return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
+
+@app.route("/LikeSerie",methods=['GET','POST'])
+def darLikeSerie():
+    unLike = Like()
+
+    miSerie = Serie.getSerie(int(request.args.get("idSerie")))
+    unLike.Serie = miSerie
+
+    for item in Usuario.getUsuarios():
+        if item.idUsuario == session['userid']:
+            unLike.Usuario = item
+
+    if not Like.getLikeUserSerie(unLike.Usuario.idUsuario, unLike.Serie.idTitulo):
+        unLike.altaLikeSerie()
+
+    return redirect("/serie?idSerie=" + str(miSerie.idTitulo))
+
+@app.route("/DislikeSerie", methods=['GET', 'POST'])
+def darDislikeSerie():
+    miSerie = Serie.getSerie(int(request.args.get("idSerie")))
+
+    for item in Like.getLikes():
+        if item.Serie==None:
+            continue
+        if item.Usuario.idUsuario == session['userid'] and item.Serie.idTitulo == miSerie.idTitulo:
+            item.bajaLikeSerie()
+
+    return redirect("/serie?idSerie=" + str(miSerie.idTitulo))
+
 
 @app.route("/Comentario",methods=['GET','POST'])
 def agregarComentarioPelicula():
@@ -124,8 +177,8 @@ def agregarComentarioPelicula():
                 unComentario.Usuario = item
 
         unComentario.altaComentarioPelicula()
-    return redirect("/pelicula?id="+str(miPelicula.idTitulo))
 
+    return redirect("/pelicula?idPelicula="+str(miPelicula.idTitulo))
 
 @app.route('/LogOut')
 def logout():

@@ -1,0 +1,25 @@
+{% extends "base_series.html" %}
+     {% block content %}
+            <center style="padding-top: 10px;">
+                <div>
+                    <h3 class="text-muted" style="color: black"> SERIE </h3>
+                        <a href="{{serie.linkPelicula}}">
+                            <img src={{serie.Linkimagen}} width="400" height="500" />
+                        </a>
+                </div>
+
+                {% if estado == 0 %}
+                    <a href="/LikeSerie?idSerie={{serie.idTitulo}}">
+                        <button type="button">Like</button>
+                    </a>
+                {% else %}
+                    <a href="/DislikeSerie?idSerie={{serie.idTitulo}}">
+                        <button type="button">Dislike</button>
+                    </a>
+                {% endif %}
+
+                {{likes}}
+
+
+            </center>
+{% endblock %}

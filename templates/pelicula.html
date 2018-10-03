@@ -9,11 +9,11 @@
                 </div>
 
                 {% if estado == 0 %}
-                    <a href="/LikePelicula?id={{pelicula.idTitulo}}">
+                    <a href="/LikePelicula?idPelicula={{pelicula.idTitulo}}">
                         <button type="button">Like</button>
                     </a>
                 {% else %}
-                    <a href="/DislikePelicula?id={{pelicula.idTitulo}}">
+                    <a href="/DislikePelicula?idPelicula={{pelicula.idTitulo}}">
                         <button type="button">Dislike</button>
                     </a>
                 {% endif %}

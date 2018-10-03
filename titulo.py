@@ -93,6 +93,25 @@ class Serie(Titulo):
 
         return listaSeries
 
+    @staticmethod
+    def getSerie(id):
+
+        cursor = DB().run("SELECT * FROM Serie where idSerie=" + str(id) + ";")
+
+        unaSerie = Serie()
+
+        for item in cursor:
+
+            unaSerie.idTitulo = item['idSerie']
+            unaSerie.nombreTitulo = item['nombreSerie']
+            unaSerie.Linkimagen = item['linkImagenSerie']
+
+            for item2 in Categoria.getCategorias():
+                if item2.idCategoria == item['Categoria_idCategoria']:
+                    unaSerie.Categoria = item2
+
+        return unaSerie
+
 
 class Capitulo(object):
     idCapitulo = None
@@ -111,5 +130,4 @@ class Capitulo(object):
             DB().run("DELETE FROM Serie WHERE idSerie = " + str(self.idCapitulo) + ";")
 
     def modificacionLinkCapitulo(self):
-        DB().run("UPDATE Capitulo SET linkCapitulo = '" + self.linkCapitulo + "' WHERE idCapitulo = " +
-str(self.idCapitulo) + ";")
+        DB().run("UPDATE Capitulo SET linkCapitulo = '" + self.linkCapitulo + "' WHERE idCapitulo = " + str(self.idCapitulo) + ";")
