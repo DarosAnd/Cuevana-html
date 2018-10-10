@@ -59,20 +59,17 @@ def ingresar():
 
     return render_template("SignIn.html")
 
-
 @app.route("/InSessionPelis", methods=['GET', 'POST'])
 def logeadoPeliculas():
     if 'userid' not in session:
         return redirect("/SignIn")
     return render_template("LogeadoPeliculas.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
 
-
 @app.route("/InSessionSerie", methods=['GET','POST'])
 def logeadoSeries():
     if 'userid' not in session:
         return redirect("/SignIn")
     return render_template("LogeadoSeries.html", Usuario=Usuario.getUsuario(session["userid"]), listaSeries=Serie.getSeries())
-
 
 @app.route("/pelicula", methods=['GET', 'POST'])
 def pelicula():
@@ -88,7 +85,6 @@ def pelicula():
 
     return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, comentarios=Comentario.getComentariosPelicula(miPelicula.idTitulo), likes=Like.getCantLikesPelicula(miPelicula.idTitulo), estado=estado)
 
-
 @app.route("/serie", methods=['GET','POST'])
 def serie():
     if 'userid' not in session:
@@ -101,7 +97,7 @@ def serie():
         if item.Usuario.idUsuario == session["userid"]:
             estado = 1
 
-    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado)
+    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado,capitulos=Capitulo.getCapitulos(miSerie.idTitulo))
 
 @app.route("/LikePelicula", methods=['GET', 'POST'])
 def darLikePelicula():
@@ -161,8 +157,7 @@ def darDislikeSerie():
 
     return redirect("/serie?idSerie=" + str(miSerie.idTitulo))
 
-
-@app.route("/Comentario",methods=['GET','POST'])
+@app.route("/ComentarioPelicula",methods=['GET','POST'])
 def agregarComentarioPelicula():
 
     if request.method == 'POST':
@@ -179,6 +174,7 @@ def agregarComentarioPelicula():
         unComentario.altaComentarioPelicula()
 
     return redirect("/pelicula?idPelicula="+str(miPelicula.idTitulo))
+
 
 @app.route('/LogOut')
 def logout():

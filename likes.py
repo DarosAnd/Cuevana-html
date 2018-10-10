@@ -11,8 +11,6 @@ class Like(object):
 
     @staticmethod
     def getLikeUserPelicula(iduser, idpelicula):
-        unLike = Like()
-
         cursor = DB().run("SELECT * FROM `Like` WHERE Usuario_idUsuario = "+ str(iduser) +" AND Pelicula_idPelicula = "+str(idpelicula) +";")
 
         dict = cursor.fetchone()
@@ -23,8 +21,6 @@ class Like(object):
 
     @staticmethod
     def getLikeUserSerie(iduser, idserie):
-        unLike = Like()
-
         cursor = DB().run(
             "SELECT * FROM `Like` WHERE Usuario_idUsuario = " + str(iduser) + " AND Serie_idSerie = " + str(idserie) + ";")
 
@@ -135,6 +131,9 @@ class Like(object):
             for item2 in Pelicula.getPeliculas():
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unLike.Pelicula = item2
+            for item4 in Serie.getSeries():
+                if item4.idTitulo == item['Serie_idSerie']:
+                    unLike.Serie = item4
             for item3 in Usuario.getUsuarios():
                 if item3.idUsuario == item['Usuario_idUsuario']:
                     unLike.Usuario = item3

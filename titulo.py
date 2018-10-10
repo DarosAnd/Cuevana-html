@@ -121,6 +121,28 @@ class Capitulo(object):
     nroTemporada = None
     Serie = None
 
+    @staticmethod
+    def getCapitulos(idSerie):
+        listaCapitulos = []
+
+        cursor = DB().run("SELECT * FROM Capitulo WHERE idCapitulo = " + str(idSerie) + ";")
+
+        for item in cursor:
+            unCapitulo = Capitulo
+            unCapitulo.idCapitulo = item['idCapitulo']
+            unCapitulo.nombreCapitulo = item['nombreCapitulo']
+            unCapitulo.nroCapitulo = item['nroCapitulo']
+            unCapitulo.nroTemporada = item['nroTemporada']
+            unCapitulo.linkCapitulo = item['linkCapitulo']
+
+            for item2 in Serie.getSeries():
+                if item2.idTitulo == item['Serie_idSerie']:
+                    unCapitulo.Serie = item2
+
+            listaCapitulos.append(unCapitulo)
+
+        return listaCapitulos
+
     def altaCapitulo(self):
         DB().run("INSERT INTO Capitulo(idCapitulo,nombreCapitulo,nroCapitulo,nroTemporada,Serie_idSerie,linkCapitulo)" +
                  "VALUES (NULL,'" + self.nombreCapitulo + "'," + str(self.nroCapitulo) + "," + str(self.nroTemporada)  +
