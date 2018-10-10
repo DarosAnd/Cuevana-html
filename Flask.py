@@ -46,7 +46,6 @@ def tomarDatos():
         return render_template("Home.html")
     return render_template("SignUp.html")
 
-
 @app.route("/SignIn", methods = ['GET', 'POST'])
 def ingresar():
     if request.method == 'POST':
@@ -55,6 +54,10 @@ def ingresar():
 
                 if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
+
+                    if item.nickName == 'admin':
+                        return redirect("/adminSession")
+
                     return redirect("/InSessionPelis")
 
     return render_template("SignIn.html")
@@ -97,7 +100,7 @@ def serie():
         if item.Usuario.idUsuario == session["userid"]:
             estado = 1
 
-    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado,capitulos=Capitulo.getCapitulos(miSerie.idTitulo))
+    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado, capitulos=Capitulo.getCapitulos(miSerie.idTitulo))
 
 @app.route("/LikePelicula", methods=['GET', 'POST'])
 def darLikePelicula():
@@ -160,10 +163,11 @@ def darDislikeSerie():
 @app.route("/ComentarioPelicula",methods=['GET','POST'])
 def agregarComentarioPelicula():
 
+    miPelicula = Pelicula.getPelicula(int(request.form.get("idPelicula")))
+
     if request.method == 'POST':
         unComentario = Comentario()
 
-        miPelicula = Pelicula.getPelicula(int(request.form.get("idPelicula")))
         unComentario.Pelicula = miPelicula
         unComentario.descripcion = request.form.get("inputComment")
 

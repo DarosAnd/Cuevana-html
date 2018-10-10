@@ -125,10 +125,10 @@ class Capitulo(object):
     def getCapitulos(idSerie):
         listaCapitulos = []
 
-        cursor = DB().run("SELECT * FROM Capitulo WHERE idCapitulo = " + str(idSerie) + ";")
+        cursor = DB().run("SELECT * FROM Capitulo WHERE Serie_idSerie = " + str(idSerie) + ";")
 
         for item in cursor:
-            unCapitulo = Capitulo
+            unCapitulo = Capitulo()
             unCapitulo.idCapitulo = item['idCapitulo']
             unCapitulo.nombreCapitulo = item['nombreCapitulo']
             unCapitulo.nroCapitulo = item['nroCapitulo']
