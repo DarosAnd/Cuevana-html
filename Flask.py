@@ -11,7 +11,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 # administradores van a poder cargar peliculas (agregar, modif, borrar)
 # borrar comentario, solo el usuario que lo puso o un mopderador
 # paginar
-# una pagina donde el usuario pueda ver todos sus likes
+# una pagina donde el usuario pueda ver todos sus likes LISTO
 
 
 @app.route("/")
@@ -55,8 +55,8 @@ def ingresar():
                 if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
 
-                    if item.nickName == 'admin':
-                        return redirect("/adminSession")
+                    # if item.nickName == 'admin':
+                    #     return redirect("/adminSession")
 
                     return redirect("/InSessionPelis")
 
@@ -66,13 +66,13 @@ def ingresar():
 def logeadoPeliculas():
     if 'userid' not in session:
         return redirect("/SignIn")
-    return render_template("LogeadoPeliculas.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+    return render_template("LogeadoPeliculas.html", usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
 
 @app.route("/InSessionSerie", methods=['GET','POST'])
 def logeadoSeries():
     if 'userid' not in session:
         return redirect("/SignIn")
-    return render_template("LogeadoSeries.html", Usuario=Usuario.getUsuario(session["userid"]), listaSeries=Serie.getSeries())
+    return render_template("LogeadoSeries.html", usuario=Usuario.getUsuario(session["userid"]), listaSeries=Serie.getSeries())
 
 @app.route("/pelicula", methods=['GET', 'POST'])
 def pelicula():
@@ -86,7 +86,7 @@ def pelicula():
         if item.Usuario.idUsuario == session["userid"]:
             estado = 1
 
-    return render_template("pelicula.html", Usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, comentarios=Comentario.getComentariosPelicula(miPelicula.idTitulo), likes=Like.getCantLikesPelicula(miPelicula.idTitulo), estado=estado)
+    return render_template("pelicula.html", usuario=Usuario.getUsuario(session["userid"]), pelicula=miPelicula, comentarios=Comentario.getComentariosPelicula(miPelicula.idTitulo), likes=Like.getCantLikesPelicula(miPelicula.idTitulo), estado=estado)
 
 @app.route("/serie", methods=['GET','POST'])
 def serie():
@@ -100,7 +100,7 @@ def serie():
         if item.Usuario.idUsuario == session["userid"]:
             estado = 1
 
-    return render_template("serie.html", Usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado, capitulos=Capitulo.getCapitulos(miSerie.idTitulo))
+    return render_template("serie.html", usuario=Usuario.getUsuario(session["userid"]), serie=miSerie, likes=Like.getCantLikesSerie(miSerie.idTitulo), estado=estado, capitulos=Capitulo.getCapitulos(miSerie.idTitulo))
 
 @app.route("/LikePelicula", methods=['GET', 'POST'])
 def darLikePelicula():
@@ -178,6 +178,32 @@ def agregarComentarioPelicula():
         unComentario.altaComentarioPelicula()
 
     return redirect("/pelicula?idPelicula="+str(miPelicula.idTitulo))
+
+@app.route('/pelisLikeadas',methods=['GET','POST'])
+def pelisLikeadas():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
+    return render_template("pelisLikeadas.html", pelis=Like.pelisLikeUsuario(session['userid']), usuario=Usuario.getUsuario(session["userid"]))
+
+@app.route('/seriesLikeadas',methods=['GET','POST'])
+def seriesLikeadas():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
+    return render_template("seriesLikeadas.html", series=Like.seriesLikeUsuario(session['userid']), usuario=Usuario.getUsuario(session["userid"]))
+
+@app.route('/borrarComentario',methods=['GET','POST'])
+def borrarComentario():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
+    miPelicula = Pelicula.getPelicula(int(request.form.get("idPelicula")))
+
+
+
+
+    return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
 
 
 @app.route('/LogOut')

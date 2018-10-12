@@ -1,0 +1,11 @@
+{% extends "base_series.html" %}
+     {% block content %}
+     <h3>Peliculas que te gustaron, {{Usuario.nickName}}</h3>
+
+     {% for item in pelis %}
+          <a href="/pelicula?idPelicula={{item.idTitulo}}">
+               <img src={{item.Linkimagen}} width="400" height="500" />
+          </a>
+     {% endfor %}
+
+{% endblock %}

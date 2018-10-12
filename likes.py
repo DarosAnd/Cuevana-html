@@ -142,6 +142,53 @@ class Like(object):
 
         return listaLikes
 
+    @staticmethod
+    def pelisLikeUsuario(idUsuario):
+
+        listaPeliculas = []
+
+        cursor = DB().run("SELECT * FROM `Like` WHERE Usuario_idUsuario = "+ str(idUsuario)+";")
+
+        for item in cursor:
+            unLike = Like()
+            unLike.idLike = item['idLike']
+
+            for item2 in Usuario.getUsuarios():
+                if item2.idUsuario == item['Usuario_idUsuario']:
+                    unLike.Usuario = item2
+
+            for item3 in Pelicula.getPeliculas():
+                if item3.idTitulo == item['Pelicula_idPelicula']:
+                    unLike.Pelicula = item3
+
+            if not unLike.Pelicula == None:
+                listaPeliculas.append(unLike.Pelicula)
+
+        return listaPeliculas
+
+    @staticmethod
+    def seriesLikeUsuario(idUsuario):
+
+        listaSerie = []
+
+        cursor = DB().run("SELECT * FROM `Like` WHERE Usuario_idUsuario = " + str(idUsuario) + ";")
+
+        for item in cursor:
+            unLike = Like()
+            unLike.idLike = item['idLike']
+
+            for item2 in Usuario.getUsuarios():
+                if item2.idUsuario == item['Usuario_idUsuario']:
+                    unLike.Usuario = item2
+
+            for item3 in Serie.getSeries():
+                if item3.idTitulo == item['Serie_idSerie']:
+                    unLike.Serie = item3
+
+            if not unLike.Serie == None:
+                listaSerie.append(unLike.Serie)
+
+        return listaSerie
 
     def altaLikePelicula(self):
         DB().run("INSERT INTO `Like`(idLike,Usuario_idUsuario,Serie_idSerie,Pelicula_idPelicula) VALUES (NULL, " + str(self.Usuario.idUsuario)+", NULL, "+str(self.Pelicula.idTitulo) + ");")

@@ -37,6 +37,11 @@ class Comentario(object):
 
         self.idComentario = c.lastrowid
 
+    def bajaComentarioPelicula(self):
+        DB().run("DELETE FROM Comentario WHERE idComentario = "+str(self.idComentario)+";")
+
     def altaComentarioCapitulo(self):
         DB().run("INSERT INTO Comentario(idComentario,descripcion,Usuario_idUsuario,Pelicula_idPelicula,Capitulo_idCapitulo) VALUES (NULL, '" + self.descripcion + "', " + self.Usuario.idUsuario + ", NULL," + self.Capitulo.idCapitulo+");")
 
+    def bajaComentarioCapitulo(self):
+        DB().run("DELETE FROM Comentario WHERE idComentario = "+str(self.idComentario)+";")

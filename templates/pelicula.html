@@ -32,6 +32,16 @@
             <h1>Comentarios</h1>
 
             {% for item in comentarios %}
-                <h6>@{{item.Usuario.nickName}} || {{item.descripcion}} </h6>
+                <h6>@{{item.Usuario.nickName}} || {{item.descripcion}}
+
+                    {% if usuario.nickName == item.Usuario.nickName %}
+                        <a href="/borrarComentario">
+                            <button type="button">Borrar</button>
+                        </a>
+                    {% endif %}
+                </h6>
+
+
+
             {% endfor %}
 {% endblock %}
