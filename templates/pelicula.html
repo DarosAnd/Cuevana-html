@@ -29,19 +29,18 @@
                 </form>
             </div>
 
+            <div align="left">
             <h1>Comentarios</h1>
 
-            {% for item in comentarios %}
-                <h6>@{{item.Usuario.nickName}} || {{item.descripcion}}
+                {% for item in comentarios %}
+                    <h6>@{{item.Usuario.nickName}} || {{item.descripcion}}
 
-                    {% if usuario.nickName == item.Usuario.nickName %}
-                        <a href="/borrarComentario">
-                            <button type="button">Borrar</button>
-                        </a>
-                    {% endif %}
-                </h6>
-
-
-
-            {% endfor %}
+                        {% if usuario.nickName == item.Usuario.nickName %}
+                            <a href="/borrarComentario?idComentario={{item.idComentario}}&idPelicula={{pelicula.idTitulo}}">
+                                <button type="button">Borrar</button>
+                            </a>
+                        {% endif %}
+                    </h6>
+                {% endfor %}
+            </div>
 {% endblock %}

@@ -9,7 +9,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 # administradores van a poder cargar peliculas (agregar, modif, borrar)
-# borrar comentario, solo el usuario que lo puso o un mopderador
+# borrar comentario, solo el usuario que lo puso LISTO o un mopderador
 # paginar
 # una pagina donde el usuario pueda ver todos sus likes LISTO
 
@@ -198,13 +198,13 @@ def borrarComentario():
     if 'userid' not in session:
         return redirect("/SignIn")
 
-    miPelicula = Pelicula.getPelicula(int(request.form.get("idPelicula")))
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
 
-
-
+    for item in Comentario.getComentarios():
+        if item.idComentario == int(request.args.get('idComentario')):
+            item.bajaComentarioPelicula()
 
     return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
-
 
 @app.route('/LogOut')
 def logout():

@@ -10,6 +10,29 @@ class Comentario(object):
     Capitulo = None
 
     @staticmethod
+    def getComentarios():
+        listaComentarios = []
+
+        cursor = DB().run("SELECT * FROM Comentario")
+
+        for item in cursor:
+            unComentario = Comentario()
+            unComentario.idComentario = item['idComentario']
+            unComentario.descripcion = item['descripcion']
+
+            for item3 in Usuario.getUsuarios():
+                if item3.idUsuario == item['Usuario_idUsuario']:
+                    unComentario.Usuario = item3
+
+            for item2 in Pelicula.getPeliculas():
+                if item2.idTitulo == item['Pelicula_idPelicula']:
+                    unComentario.Pelicula = item2
+
+            listaComentarios.append(unComentario)
+
+        return listaComentarios
+
+    @staticmethod
     def getComentariosPelicula(idPelicula):
         listaComentarios = []
 

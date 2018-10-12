@@ -24,7 +24,7 @@
             {% for item in capitulos %}
                 {% for item2 in range(item.nroTemporada) %}
                     {% if item2+1 == 1%}
-                        <a href="{{item.linkCapitulo}}"><br>{{item.nombreCapitulo}}<br/><a/>
+                        <a href="{{item.linkCapitulo}}"><br>{{item.nombreCapitulo}}<br/></a>
                     {%endif%}
                 {% endfor %}
             {% endfor %}

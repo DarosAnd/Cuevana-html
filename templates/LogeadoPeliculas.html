@@ -6,19 +6,20 @@
         <div class="container">
             <div class="wrapper">
 
-                <tbody>
+                <body>
                   {% for item in listaPeliculas %}
                     <a href="/pelicula?idPelicula={{item.idTitulo}}">
                         <img src={{item.Linkimagen}} width="400" height="500" />
                     </a>
                   {% endfor %}
-                </tbody>
+                </body>
 
-            </div>
-
-            <div class="row marketing">
-
-            </div>
+             <div class="paginacion">
+                <ul class="paginacion">
+                    <li class="previous disabled"><a href="#">Anteriores</a></li>
+                     <li class="next"><a href="#">Siguientes</a></li>
+                </ul>
+             </div>
 
             <footer class="footer">
                 <p>&copy; GalaxarCompany </p>
