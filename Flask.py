@@ -232,11 +232,7 @@ def altapeli():
 
 @app.route('/bajaPeli',methods=['GET','POST'])
 def bajapeli():
-    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
-
-    miPelicula.bajaPelicula()
-
-    return render_template("bajaPelicula.html", listaPeliculas=Pelicula.getPeliculas(), pelicula=miPelicula)
+    return render_template("bajaPelicula.html", listaPeliculas=Pelicula.getPeliculas())
 
 @app.route('/LogOut')
 def logout():
