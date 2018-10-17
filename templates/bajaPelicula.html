@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+</head>
+<body>
+    {% for item in listaPeliculas %}
+        <a href="/bajapeli?idPelicula={{item.idTitulo}}">
+            <button>{{item.idTitulo}}</button> // {{item.nombreTitulo}}<br>
+        </a>
+    {% endfor %}
+</body>
+</html>

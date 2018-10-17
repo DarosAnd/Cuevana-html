@@ -55,8 +55,8 @@ def ingresar():
                 if item.nickName == request.form.get('inputNickname') and item.contrasenia == x.hexdigest():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
 
-                    # if item.nickName == 'admin':
-                    #     return redirect("/adminSession")
+                    if item.nickName == 'admin':
+                        return redirect("/adminSession")
 
                     return redirect("/InSessionPelis")
 
@@ -205,6 +205,38 @@ def borrarComentario():
             item.bajaComentarioPelicula()
 
     return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
+
+@app.route('/adminSession', methods=['GET','POST'])
+def modoAdministrador():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+    return render_template("adminSession.html")
+
+@app.route('/altaPeli',methods=['GET','POST'])
+def altapeli():
+    if request.method == 'POST':
+        unaPelicula = Pelicula()
+        unaPelicula.nombreTitulo = request.form.get("inputNombre")
+        unaPelicula.linkPelicula = request.form.get("inputLink")
+        unaPelicula.Linkimagen = request.form.get("inputLinkImagen")
+
+        for item in Categoria.getCategorias():
+            if item.idCategoria == int(request.form.get("inputIdCategoria")):
+                unaPelicula.Categoria = item
+
+        unaPelicula.altaPelicula()
+
+        redirect('/adminSession')
+
+    return render_template("altaPelicula.html")
+
+@app.route('/bajaPeli',methods=['GET','POST'])
+def bajapeli():
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
+
+    miPelicula.bajaPelicula()
+
+    return render_template("bajaPelicula.html", listaPeliculas=Pelicula.getPeliculas(), pelicula=miPelicula)
 
 @app.route('/LogOut')
 def logout():

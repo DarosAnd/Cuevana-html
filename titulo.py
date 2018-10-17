@@ -49,9 +49,8 @@ class Pelicula(Titulo):
         return unaPelicula
 
     def altaPelicula(self):
-        DB().run("INSERT INTO Pelicula(idPelicula,nombrePelicula,linkPelicula,Categoria_idCategoria)" +
-                 "VALUES (NULL,'" + self.nombreTitulo + "','" + self.linkPelicula + "','" +
-                 self.Categoria.idCategoria + "');")
+        c = DB().run("INSERT INTO Pelicula(idPelicula,nombrePelicula,linkPelicula,Categoria_idCategoria,linkImagenPelicula)VALUES (NULL,'" + self.nombreTitulo + "','" + self.linkPelicula + "'," + str(self.Categoria.idCategoria) + ",'"+ self.Linkimagen +"');")
+        self.idTitulo = c.lastrowid
 
     def bajaPelicula(self):
             DB().run("DELETE FROM Pelicula WHERE idPelicula = " + str(self.idTitulo) + ";")
@@ -63,8 +62,9 @@ class Pelicula(Titulo):
 
 class Serie(Titulo):
     def altaSerie(self):
-        DB().run("INSERT INTO Serie(idSerie,nombreSerie,Categoria_idCategoria)" +
-                 "VALUES (NULL,'" + self.nombreTitulo + "','" + self.Categoria.idCategoria + "');")
+        c = DB().run("INSERT INTO Serie(idSerie,nombreSerie,Categoria_idCategoria)VALUES (NULL,'" + self.nombreTitulo + "','" + self.Categoria.idCategoria + "');")
+
+        self.idTitulo = c.lastrowid
 
     def bajaSerie(self):
             DB().run("DELETE FROM Serie WHERE idSerie = " + str(self.idTitulo) + ";")

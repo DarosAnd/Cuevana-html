@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+        <head>
+                <title> Modo Administrador </title>
+
+              <link rel="stylesheet" href="/static/css_nuevo/base.css">
+              <link rel="stylesheet" href="/static/css_nuevo/main.css">
+              <link rel="stylesheet" href="/static/css_nuevo/vendor.css">
+              <link rel="stylesheet" href="/static/css_login/login.css">
+
+        </head>
+
+        <body>
+        <div class="login">
+            <div class="heading">
+                <form method="POST" action="/altaPeli">
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" name="inputNombre" id="inputNombre" class="form-control" placeholder="Nombre Pelicula" required >
+                    </div>
+
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" name="inputLink" id="inputLink" class="form-control" placeholder="Link Pelicula" required >
+                    </div>
+
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" name="inputLinkImagen" id="inputLinkImagen" class="form-control" placeholder="Link Portada" required >
+                    </div>
+
+                    <div class="input-group input-group-lg">
+                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                        <input type="text" name="inputIdCategoria" id="inputIdCategoria" class="form-control" placeholder="IdCategoria" required>
+                    </div>
+
+                    <center><button type="submit" class="float">Guardar</button></center>
+                </form>
+            </div>
+        </div>
+        <a href="/adminSession">Volver</a>
+        </body>
+</html>
+

@@ -1,6 +1,6 @@
 {% extends "base_series.html" %}
      {% block content %}
-     <h3>Peliculas que te gustaron, {{Usuario.nickName}}</h3>
+     <h3>Peliculas que te gustaron, {{usuario.nickName}}</h3>
 
      {% for item in pelis %}
           <a href="/pelicula?idPelicula={{item.idTitulo}}">
