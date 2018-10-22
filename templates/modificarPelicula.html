@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="/static/css_nuevo/base.css">
+    <link rel="stylesheet" href="/static/css_nuevo/main.css">
+    <link rel="stylesheet" href="/static/css_nuevo/vendor.css">
+    <link rel="stylesheet" href="/static/css_login/login.css">
+</head>
+
+<body>
+    <img src={{pelicula.Linkimagen}} width="400" height="500" />
+
+    <form method="POST" action="/modificarPelicula?idPelicula={{pelicula.idTitulo}}">
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-user"></i></span>
+            <input type="text" name="inputNombrePeli" id="inputNombrePeli" class="form-control" placeholder="Nuevo Nombre Pelicula">
+        </div>
+
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="text" name="inputLinkImagen" id="inputLinkImagen" class="form-control" placeholder="Nuevo Link Imagen">
+        </div>
+
+        <div class="input-group input-group-lg">
+            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+            <input type="text" name="inputLinkPeli" id="inputLinkPeli" class="form-control" placeholder="Nuevo Link Pelicula">
+        </div>
+
+        <button type="submit" class="float">Confirmar</button>
+    </form>
+
+    <a href="/adminSession">Volver a inicio</a>
+</body>
+</html>

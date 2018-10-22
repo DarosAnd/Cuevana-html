@@ -1,0 +1,32 @@
+{% extends "base_admin2.html" %}
+     {% block content %}
+
+        <h3 class="text-muted" style="color: white"> BIENVENIDO A CUEBANA2.0 </h3>
+
+        <div class="container">
+            <div class="wrapper">
+
+                <tbody>
+                  {% for item in listaSeries %}
+                    <a href="/serie?idSerie={{item.idTitulo}}">
+                        <img src={{item.Linkimagen}} width="400" height="500" />
+                   </a>
+                  {% endfor %}
+                </tbody>
+
+            </div>
+
+            <div class="row marketing">
+
+            </div>
+
+            <footer class="footer">
+                <p>&copy; GalaxarCompany </p>
+            </footer>
+
+        </div>
+    </body>
+
+</center>
+
+{% endblock %}

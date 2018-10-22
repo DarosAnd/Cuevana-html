@@ -8,7 +8,7 @@ app = Flask(__name__, static_url_path="/static")
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
-# administradores van a poder cargar peliculas (agregar, modif, borrar)
+# administradores van a poder cargar peliculas (agregar, modif, borrar) LISTO
 # borrar comentario, solo el usuario que lo puso LISTO o un mopderador
 # paginar
 # una pagina donde el usuario pueda ver todos sus likes LISTO
@@ -56,7 +56,7 @@ def ingresar():
                     session['userid'] = Usuario.devolverIdUsuarioPorNickName(request.form.get('inputNickname'))
 
                     if item.nickName == 'admin':
-                        return redirect("/adminSession")
+                        return redirect("/adminSessionPelis")
 
                     return redirect("/InSessionPelis")
 
@@ -206,11 +206,17 @@ def borrarComentario():
 
     return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
 
-@app.route('/adminSession', methods=['GET','POST'])
+@app.route('/adminSessionPelis', methods=['GET','POST'])
 def modoAdministrador():
     if 'userid' not in session:
         return redirect("/SignIn")
-    return render_template("adminSession.html")
+    return render_template("adminSessionPelis.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+
+@app.route('/adminSessionSeries', methods=['GET','POST'])
+def modoAdministrador2():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+    return render_template("adminSessionSeries.html", Usuario=Usuario.getUsuario(session["userid"]), listaSeries=Serie.getSeries())
 
 @app.route('/altaPeli',methods=['GET','POST'])
 def altapeli():
@@ -230,9 +236,35 @@ def altapeli():
 
     return render_template("altaPelicula.html")
 
-@app.route('/bajaPeli',methods=['GET','POST'])
-def bajapeli():
-    return render_template("bajaPelicula.html", listaPeliculas=Pelicula.getPeliculas())
+@app.route('/mostrarPeliculas',methods=['GET','POST'])
+def mostrarPelis():
+    return render_template("mostrarPeliculas.html", listaPeliculas=Pelicula.getPeliculas())
+
+@app.route('/mostrarPeliculasMod',methods=['GET','POST'])
+def mostrarPelisMod():
+    return render_template("mostrarPeliculasMod.html", listaPeliculas=Pelicula.getPeliculas())
+
+
+@app.route('/bajaPelicula',methods=['GET', 'POST'])
+def bajaPeli():
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
+
+    miPelicula.bajaPelicula()
+
+    return redirect('/mostrarPeliculas')
+
+@app.route('/modificarPelicula',methods=['GET','POST'])
+def modifPeli():
+    miPelicula = Pelicula.getPelicula(int(request.args.get("idPelicula")))
+
+    if request.method == 'POST':
+        miPelicula.nombreTitulo = request.form.get("inputNombrePeli")
+        miPelicula.linkPelicula = request.form.get("inputLinkPeli")
+        miPelicula.Linkimagen = request.form.get("inputLinkImagen")
+
+        miPelicula.modificacionPelicula()
+
+    return render_template("modificarPelicula.html", pelicula=miPelicula)
 
 @app.route('/LogOut')
 def logout():

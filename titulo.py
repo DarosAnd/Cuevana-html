@@ -33,7 +33,7 @@ class Pelicula(Titulo):
 
     @staticmethod
     def getPelicula(id):
-        cursor = DB().run("SELECT * FROM Pelicula where idPelicula="+str(id)+";")
+        cursor = DB().run("SELECT * FROM Pelicula where idPelicula=" +str(id)+ "limit 3 offset {3};")
         unaPelicula = Pelicula()
         for item in cursor:
 
@@ -53,11 +53,13 @@ class Pelicula(Titulo):
         self.idTitulo = c.lastrowid
 
     def bajaPelicula(self):
+            DB().run("DELETE FROM Comentario WHERE Pelicula_idPelicula = "+ str(self.idTitulo)+";")
+            DB().run("DELETE FROM `Like` WHERE Pelicula_idPelicula = "+ str(self.idTitulo)+";")
+
             DB().run("DELETE FROM Pelicula WHERE idPelicula = " + str(self.idTitulo) + ";")
 
     def modificacionPelicula(self):
-        DB().run("UPDATE Usuario SET linkPelicula = '" + self.linkPelicula +
-                 "', Categoria_idCategoria = '" + self.Categoria.idCategoria + "' WHERE idPelicula = " + str(self.idTitulo) + ";")
+        DB().run("UPDATE Pelicula SET linkPelicula = '" + self.linkPelicula + "', linkImagenPelicula = '" + self.Linkimagen + "', nombrePelicula = '" + self.nombreTitulo + "' WHERE idPelicula = " + str(self.idTitulo) + ";")
 
 
 class Serie(Titulo):
@@ -111,6 +113,12 @@ class Serie(Titulo):
                     unaSerie.Categoria = item2
 
         return unaSerie
+
+    @staticmethod
+    def filtro():
+        listademuestra = []
+        cursor = DB().run("select * from Pelicula limit 1 offset {3}")
+
 
 
 class Capitulo(object):
