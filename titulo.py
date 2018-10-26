@@ -11,10 +11,12 @@ class Pelicula(Titulo):
     linkPelicula = None
 
     @staticmethod
-    def getPeliculas():
+    def getPeliculas(limit, offset):
         listaPeliculas = []
 
-        cursor = DB().run("SELECT * FROM Pelicula")
+        cursor = DB().run("SELECT * FROM Pelicula limit " + str(limit) + " offset " + str(offset) + ";")
+        # dict = cursor.fetchall()
+
 
         for item in cursor:
             unaPelicula = Pelicula()
@@ -33,7 +35,7 @@ class Pelicula(Titulo):
 
     @staticmethod
     def getPelicula(id):
-        cursor = DB().run("SELECT * FROM Pelicula where idPelicula=" +str(id)+ "limit 3 offset {3};")
+        cursor = DB().run("SELECT * FROM Pelicula where idPelicula=" +str(id)+ ";")
         unaPelicula = Pelicula()
         for item in cursor:
 
@@ -79,7 +81,7 @@ class Serie(Titulo):
     def getSeries():
         listaSeries = []
 
-        cursor = DB().run("SELECT * FROM Serie")
+        cursor = DB().run("SELECT * FROM Serie ;")
 
         for item in cursor:
             unaSeries = Pelicula()
@@ -114,10 +116,6 @@ class Serie(Titulo):
 
         return unaSerie
 
-    @staticmethod
-    def filtro():
-        listademuestra = []
-        cursor = DB().run("select * from Pelicula limit 1 offset {3}")
 
 
 

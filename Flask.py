@@ -10,7 +10,7 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 # administradores van a poder cargar peliculas (agregar, modif, borrar) LISTO
 # borrar comentario, solo el usuario que lo puso LISTO o un mopderador
-# paginar
+# paginar LISTO
 # una pagina donde el usuario pueda ver todos sus likes LISTO
 
 
@@ -20,9 +20,18 @@ def index():
 
 @app.route("/Home")
 def inicio():
+    if 'offset' not in request.args:
+        offset = 0
+
+    else:
+        offset = int(request.args.get('offset'))
+        if offset < 0:
+            offset = 0
+
+
     if 'userid' in session:
         return redirect("/InSessionPelis")
-    return render_template("Home.html", listaPeliculas=Pelicula.getPeliculas())
+    return render_template("Home.html", listaPeliculas=Pelicula.getPeliculas(3, offset), offset=offset)
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
 def tomarDatos():
@@ -64,9 +73,16 @@ def ingresar():
 
 @app.route("/InSessionPelis", methods=['GET', 'POST'])
 def logeadoPeliculas():
+    if 'offset' not in request.args:
+        offset = 0
+    else:
+        offset = int(request.args.get('offset'))
+        if offset < 0:
+            offset = 0
+
     if 'userid' not in session:
         return redirect("/SignIn")
-    return render_template("LogeadoPeliculas.html", usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+    return render_template("LogeadoPeliculas.html", usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas(3 , offset), offset= offset)
 
 @app.route("/InSessionSerie", methods=['GET','POST'])
 def logeadoSeries():
@@ -204,13 +220,21 @@ def borrarComentario():
         if item.idComentario == int(request.args.get('idComentario')):
             item.bajaComentarioPelicula()
 
+
     return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
 
 @app.route('/adminSessionPelis', methods=['GET','POST'])
 def modoAdministrador():
+    if 'offset' not in request.args:
+        offset = 0
+    else:
+        offset = int(request.args.get('offset'))
+        if offset < 0:
+            offset = 0
+
     if 'userid' not in session:
         return redirect("/SignIn")
-    return render_template("adminSessionPelis.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas())
+    return render_template("adminSessionPelis.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas(3 , offset), offset= offset)
 
 @app.route('/adminSessionSeries', methods=['GET','POST'])
 def modoAdministrador2():
@@ -238,12 +262,11 @@ def altapeli():
 
 @app.route('/mostrarPeliculas',methods=['GET','POST'])
 def mostrarPelis():
-    return render_template("mostrarPeliculas.html", listaPeliculas=Pelicula.getPeliculas())
+    return render_template("mostrarPeliculas.html", listaPeliculas=Pelicula.getPeliculas(6, 0))
 
 @app.route('/mostrarPeliculasMod',methods=['GET','POST'])
 def mostrarPelisMod():
-    return render_template("mostrarPeliculasMod.html", listaPeliculas=Pelicula.getPeliculas())
-
+    return render_template("mostrarPeliculasMod.html", listaPeliculas=Pelicula.getPeliculas(6, 0))
 
 @app.route('/bajaPelicula',methods=['GET', 'POST'])
 def bajaPeli():

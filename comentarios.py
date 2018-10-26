@@ -24,7 +24,7 @@ class Comentario(object):
                 if item3.idUsuario == item['Usuario_idUsuario']:
                     unComentario.Usuario = item3
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(1000, 0):
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unComentario.Pelicula = item2
 
@@ -43,7 +43,7 @@ class Comentario(object):
             unComentario.idComentario = item['idComentario']
             unComentario.descripcion = item['descripcion']
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(1000, 0):
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unComentario.Pelicula = item2
             for item3 in Usuario.getUsuarios():
