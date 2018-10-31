@@ -71,6 +71,16 @@ html {
 
 }
 
+.inicio {
+  background-image: url(netflix.jpg);
+  padding: 200px;
+  font-family: "Nunito Sans", sans-serif;
+  font-size: 5rem;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1.8333;
+}
+
 html, body {
   height: 100%;
 }

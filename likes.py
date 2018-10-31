@@ -42,7 +42,7 @@ class Like(object):
             unLike.idLike = item['idLike']
 
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(100, 0):
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unLike.Pelicula = item2
             for item2 in Usuario.getUsuarios():
@@ -63,7 +63,7 @@ class Like(object):
             unLike = Like()
             unLike.idLike = item['idLike']
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(100, 0):
                 if item2.idTitulo == item['Serie_idSerie']:
                     unLike.Serie = item2
             for item2 in Usuario.getUsuarios():
@@ -86,7 +86,7 @@ class Like(object):
             unLike.idLike = item['idLike']
 
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(100, 0):
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unLike.Pelicula = item2
             for item2 in Usuario.getUsuarios():
@@ -107,7 +107,7 @@ class Like(object):
             unLike = Like()
             unLike.idLike = item['idLike']
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(100, 0):
                 if item2.idTitulo == item['Serie_idSerie']:
                     unLike.Serie = item2
             for item2 in Usuario.getUsuarios():
@@ -128,7 +128,7 @@ class Like(object):
             unLike = Like()
             unLike.idLike = item['idLike']
 
-            for item2 in Pelicula.getPeliculas():
+            for item2 in Pelicula.getPeliculas(100, 0):
                 if item2.idTitulo == item['Pelicula_idPelicula']:
                     unLike.Pelicula = item2
             for item4 in Serie.getSeries():
@@ -157,7 +157,7 @@ class Like(object):
                 if item2.idUsuario == item['Usuario_idUsuario']:
                     unLike.Usuario = item2
 
-            for item3 in Pelicula.getPeliculas():
+            for item3 in Pelicula.getPeliculas(100, 0):
                 if item3.idTitulo == item['Pelicula_idPelicula']:
                     unLike.Pelicula = item3
 

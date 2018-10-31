@@ -35,7 +35,7 @@
                 {% for item in comentarios %}
                     <h6>@{{item.Usuario.nickName}} || {{item.descripcion}}
 
-                        {% if usuario.nickName == item.Usuario.nickName %}
+                        {% if usuario.nickName == item.Usuario.nickName or usuario.nickName == 'admin'%}
                             <a href="/borrarComentario?idComentario={{item.idComentario}}&idPelicula={{pelicula.idTitulo}}">
                                 <button type="button">Borrar</button>
                             </a>

@@ -9,17 +9,27 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 
 
 # administradores van a poder cargar peliculas (agregar, modif, borrar) LISTO
-# borrar comentario, solo el usuario que lo puso LISTO o un mopderador
+# borrar comentario, solo el usuario que lo puso LISTO o un mopderador LISTO
 # paginar LISTO
 # una pagina donde el usuario pueda ver todos sus likes LISTO
 
 
 @app.route("/")
 def index():
-    return redirect("/Home")
+    return redirect("/caratula")
+
+@app.route("/caratula")
+def caratula():
+    if 'userid' in session:
+        return redirect("/InSessionPelis")
+
+    return render_template("caratula.html")
 
 @app.route("/Home")
 def inicio():
+    if 'userid' in session:
+        return redirect("/InSessionPelis")
+
     if 'offset' not in request.args:
         offset = 0
 
@@ -27,10 +37,9 @@ def inicio():
         offset = int(request.args.get('offset'))
         if offset < 0:
             offset = 0
+        if offset >= len(Pelicula.getPeliculas(3, offset)):
+            offset = len(Pelicula.getPeliculas(3, offset))
 
-
-    if 'userid' in session:
-        return redirect("/InSessionPelis")
     return render_template("Home.html", listaPeliculas=Pelicula.getPeliculas(3, offset), offset=offset)
 
 @app.route("/SignUp", methods = ['GET', 'POST'])
@@ -44,7 +53,7 @@ def tomarDatos():
         x = hashlib.sha256(unUsuario.contrasenia.encode('utf8'))
         unUsuario.contrasenia = x.hexdigest()
         unUsuario.nickName = request.form.get("inputNickname")
-        session['userid'] = unUsuario.idUsuario
+        # session['userid'] = unUsuario.idUsuario
 
         for item in Usuario().getUsuarios():
             if item.mail == unUsuario.mail or item.nickName == unUsuario.nickName:
@@ -52,7 +61,7 @@ def tomarDatos():
 
         unUsuario.registrarUsuario()
 
-        return render_template("Home.html")
+        return redirect("/SignIn")
     return render_template("SignUp.html")
 
 @app.route("/SignIn", methods = ['GET', 'POST'])
@@ -73,15 +82,18 @@ def ingresar():
 
 @app.route("/InSessionPelis", methods=['GET', 'POST'])
 def logeadoPeliculas():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
     if 'offset' not in request.args:
         offset = 0
     else:
         offset = int(request.args.get('offset'))
         if offset < 0:
             offset = 0
+        if offset >= len(Pelicula.getPeliculas(3, offset)):
+            offset = len(Pelicula.getPeliculas(3, offset))
 
-    if 'userid' not in session:
-        return redirect("/SignIn")
     return render_template("LogeadoPeliculas.html", usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas(3 , offset), offset= offset)
 
 @app.route("/InSessionSerie", methods=['GET','POST'])
@@ -133,7 +145,7 @@ def darLikePelicula():
     if not Like.getLikeUserPelicula(unLike.Usuario.idUsuario, unLike.Pelicula.idTitulo):
         unLike.altaLikePelicula()
 
-    return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo))
+    return redirect("/pelicula?idPelicula=" + str(miPelicula.idTitulo), )
 
 @app.route("/DislikePelicula", methods=['GET', 'POST'])
 def darDislikePelicula():
@@ -225,15 +237,19 @@ def borrarComentario():
 
 @app.route('/adminSessionPelis', methods=['GET','POST'])
 def modoAdministrador():
+    if 'userid' not in session:
+        return redirect("/SignIn")
+
     if 'offset' not in request.args:
         offset = 0
     else:
         offset = int(request.args.get('offset'))
         if offset < 0:
             offset = 0
+        if offset >= len(Pelicula.getPeliculas(3, offset)):
+            offset = len(Pelicula.getPeliculas(3, offset))
 
-    if 'userid' not in session:
-        return redirect("/SignIn")
+
     return render_template("adminSessionPelis.html", Usuario=Usuario.getUsuario(session["userid"]), listaPeliculas=Pelicula.getPeliculas(3 , offset), offset= offset)
 
 @app.route('/adminSessionSeries', methods=['GET','POST'])

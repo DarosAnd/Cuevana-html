@@ -30,7 +30,6 @@ class Pelicula(Titulo):
                     unaPelicula.Categoria = item2
 
             listaPeliculas.append(unaPelicula)
-
         return listaPeliculas
 
     @staticmethod

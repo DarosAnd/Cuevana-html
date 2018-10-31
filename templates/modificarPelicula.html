@@ -13,22 +13,22 @@
     <form method="POST" action="/modificarPelicula?idPelicula={{pelicula.idTitulo}}">
         <div class="input-group input-group-lg">
             <span class="input-group-addon"><i class="fa fa-user"></i></span>
-            <input type="text" name="inputNombrePeli" id="inputNombrePeli" class="form-control" placeholder="Nuevo Nombre Pelicula">
+            <input type="text" name="inputNombrePeli" id="inputNombrePeli" class="form-control" placeholder="Nuevo Nombre Pelicula" required>
         </div>
 
         <div class="input-group input-group-lg">
             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="text" name="inputLinkImagen" id="inputLinkImagen" class="form-control" placeholder="Nuevo Link Imagen">
+            <input type="text" name="inputLinkImagen" id="inputLinkImagen" class="form-control" placeholder="Nuevo Link Imagen" required>
         </div>
 
         <div class="input-group input-group-lg">
             <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-            <input type="text" name="inputLinkPeli" id="inputLinkPeli" class="form-control" placeholder="Nuevo Link Pelicula">
+            <input type="text" name="inputLinkPeli" id="inputLinkPeli" class="form-control" placeholder="Nuevo Link Pelicula" required>
         </div>
 
         <button type="submit" class="float">Confirmar</button>
     </form>
 
-    <a href="/adminSession">Volver a inicio</a>
+    <a href="/adminSessionPelis">Volver a inicio</a>
 </body>
 </html>
